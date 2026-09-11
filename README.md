@@ -2,15 +2,37 @@
 
 Public product site for **Synwyr MCP by Kodaxa**.
 
-Synwyr is the public brand for a local-first, operation-first 3D agent control and verification architecture. The active engineering implementation currently lives in [`Kodaxadev/RoboVision`](https://github.com/Kodaxadev/RoboVision); this repository intentionally contains only the public website.
+Synwyr is the public brand for the spatial control plane currently being developed in [`Kodaxadev/RoboVision`](https://github.com/Kodaxadev/RoboVision). The engineering repository will eventually adopt the Synwyr name; this repository is the public-facing product site.
+
+## Product direction
+
+The website is intentionally written around the **end-state product**, not the present implementation checkpoint.
+
+Synwyr is being designed as a local-first reasoning, authoring, verification, and recovery layer between capable AI models and professional 3D tools. The goal is to let an agent operate through a closed loop:
+
+**PERCEIVE → REASON → AUTHOR → VERIFY → CORRECT → DELIVER**
+
+The long-term system is broader than a Blender automation bridge or an MCP wrapper. MCP is one adapter into a model-agnostic control plane built around:
+
+- authoritative scene and asset state;
+- stable object identity, revisions, coordinate contracts, and provenance;
+- semantic and visual perception in the same reasoning loop;
+- typed, editor-native 3D operations instead of giant generated scripts;
+- deterministic geometry, spatial, reference, pattern, coverage, and locality truth;
+- transactional authoring with verified commit or rollback;
+- cross-host support for Blender, Unity, and future DCC / engine integrations;
+- reusable skills distilled from successful and failed correction trajectories;
+- external generators treated as candidate sources while Synwyr remains the execution and verification layer.
+
+The product promise is not "AI can call Blender." It is that a capable reasoning model can inspect a live 3D world, make bounded changes, measure what actually happened, recover safely from bad hypotheses, and keep iterating toward production-quality work.
 
 ## Design direction
 
-The visual system is derived from the Synwyr perception mark: near-black spatial depth, ice/cyan spectral highlights, precise geometric lines, luminous state indicators, and restrained metallic typography. The product story is built around three ideas:
+The visual system is derived from the Synwyr perception mark: near-black spatial depth, ice/cyan spectral highlights, precise geometric lines, luminous state indicators, and restrained metallic typography.
 
-**PERCEPTION → ACTION → PROOF**
+The product story centers on three public ideas:
 
-The site avoids unsupported autonomy claims. Current engineering status is expressed in terms of the acceptance-gate architecture used by the RoboVision codebase.
+**PERCEPTION → AUTHORING → PROOF**
 
 ## Local preview
 
@@ -34,4 +56,4 @@ Then open `http://localhost:4173`.
 
 ## Engineering source
 
-The website links directly to the implementation and living architecture documents in [`Kodaxadev/RoboVision`](https://github.com/Kodaxadev/RoboVision).
+Until the implementation repository is renamed, the website links directly to [`Kodaxadev/RoboVision`](https://github.com/Kodaxadev/RoboVision).
