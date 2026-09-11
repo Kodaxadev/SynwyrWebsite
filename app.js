@@ -50,9 +50,9 @@
 
   const loopStates = [
     {
-      title: 'SEE THE SCENE',
-      copy: 'Read live scene state, persistent IDs, and visual evidence before changing anything.',
-      log: ['scene.snapshot()', 'viewport.capture()', 'object.id = obj_142'],
+      title: 'BUILD THE SCENE MODEL',
+      copy: 'Read authoritative scene state, geometry, identities, reference evidence, and known limits before planning a change.',
+      log: ['scene.snapshot()', 'perception.capture_bundle()', 'truth.measure()'],
       verify: 'EVIDENCE CAPTURED',
       verifyWarn: true,
       activeNode: 0,
@@ -64,10 +64,10 @@
       }
     },
     {
-      title: 'APPLY THE CHANGE',
-      copy: 'Run a structured operation against the exact scene revision the agent already inspected.',
-      log: ['transaction.begin()', 'mesh.extrude(face_08)', 'if_revision = 2417'],
-      verify: 'CHANGE IN PROGRESS',
+      title: 'AUTHOR A BOUNDED CHANGE',
+      copy: 'Use typed editor-native operations inside a revision-pinned transaction, with explicit targets and edit locality.',
+      log: ['transaction.begin(rev)', 'object / mesh / material ops', 'locality = bounded'],
+      verify: 'CANDIDATE IN PROGRESS',
       verifyWarn: true,
       activeNode: 1,
       scene: scene => {
@@ -78,10 +78,10 @@
       }
     },
     {
-      title: 'VERIFY THE RESULT',
-      copy: 'Inspect again, compare before and after state, and only then trust or commit the result.',
-      log: ['mesh.validate()', 'scene.diff()', 'transaction.commit()'],
-      verify: '✓ MATCHES EXPECTATION',
+      title: 'PROVE OR ROLLBACK',
+      copy: 'Measure the authored result against hard invariants and declared goals. Keep only the state that actually passed.',
+      log: ['truth.evaluate()', 'scene.diff()', 'commit() / rollback()'],
+      verify: '✓ VERIFIED STATE',
       verifyWarn: false,
       activeNode: 2,
       scene: scene => {
