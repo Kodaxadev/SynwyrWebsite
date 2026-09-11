@@ -1,21 +1,18 @@
-<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="edge" x1="36" y1="34" x2="218" y2="226" gradientUnits="userSpaceOnUse"><stop stop-color="#E9FBFF"/><stop offset="0.35" stop-color="#62E1FF"/><stop offset="1" stop-color="#167BFF"/></linearGradient>
-    <linearGradient id="wing" x1="58" y1="83" x2="198" y2="175" gradientUnits="userSpaceOnUse"><stop stop-color="#F9FEFF"/><stop offset="0.35" stop-color="#B6ECFF"/><stop offset="0.7" stop-color="#4ECFFF"/><stop offset="1" stop-color="#126CDA"/></linearGradient>
-    <radialGradient id="iris" cx="0" cy="0" r="1" gradientTransform="translate(111 102) rotate(48) scale(69)"><stop stop-color="#F8FFFF"/><stop offset="0.16" stop-color="#8CF1FF"/><stop offset="0.48" stop-color="#26B7FF"/><stop offset="0.78" stop-color="#1267E6"/><stop offset="1" stop-color="#06162C"/></radialGradient>
-    <filter id="glow" x="-60" y="-60" width="376" height="376" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="5" result="blur"/><feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.1 0 0 0 0 0.72 0 0 0 0 1 0 0 0 .9 0"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    <filter id="soft" x="40" y="40" width="176" height="176" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="10"/></filter>
+    <linearGradient id="m" x1="45" y1="38" x2="211" y2="218" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F5FCFF"/><stop offset=".38" stop-color="#AEEBFA"/><stop offset=".72" stop-color="#4FCBF2"/><stop offset="1" stop-color="#1B78D7"/>
+    </linearGradient>
+    <linearGradient id="c" x1="94" y1="88" x2="166" y2="166" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C6F7FF"/><stop offset=".48" stop-color="#59DDF7"/><stop offset="1" stop-color="#1889F2"/>
+    </linearGradient>
   </defs>
-  <circle cx="128" cy="128" r="70" fill="#0A6DFF" fill-opacity=".16" filter="url(#soft)"/>
-  <g filter="url(#glow)">
-    <path d="M128 18L220 72V184L128 238L36 184V72L128 18Z" stroke="url(#edge)" stroke-width="3"/>
-    <path d="M128 18V70M220 72L176 96M220 184L176 160M128 238V186M36 184L80 160M36 72L80 96" stroke="url(#edge)" stroke-opacity=".72" stroke-width="2"/>
-    <path d="M128 70C105 70 83 81 64 104C83 132 103 144 128 144C153 144 173 132 192 104C173 81 151 70 128 70Z" fill="#07111C" stroke="url(#wing)" stroke-width="4"/>
-    <path d="M65 104C89 109 106 112 128 112C150 112 167 109 191 104" stroke="#E7FAFF" stroke-opacity=".42" stroke-width="1.5"/>
-    <path d="M128 70C115 82 108 93 108 106C108 119 115 132 128 144C141 132 148 119 148 106C148 93 141 82 128 70Z" fill="url(#wing)" fill-opacity=".28"/>
-    <circle cx="128" cy="106" r="25" fill="url(#iris)" stroke="#C7F4FF" stroke-width="3"/><circle cx="120" cy="97" r="6" fill="white" fill-opacity=".72"/>
-    <path d="M128 144C106 144 93 151 80 160C94 179 109 186 128 186C147 186 162 179 176 160C163 151 150 144 128 144Z" fill="#07111C" stroke="url(#wing)" stroke-width="3"/>
-    <path d="M128 70C109 70 94 63 80 48C95 35 110 27 128 18C146 27 161 35 176 48C162 63 147 70 128 70Z" fill="#07111C" stroke="url(#wing)" stroke-width="3"/>
-    <g fill="#E9FBFF" stroke="#72E5FF" stroke-width="2"><circle cx="128" cy="18" r="7"/><circle cx="220" cy="72" r="7"/><circle cx="220" cy="184" r="7"/><circle cx="128" cy="238" r="7"/><circle cx="36" cy="184" r="7"/><circle cx="36" cy="72" r="7"/></g>
-  </g>
+  <path d="M128 18 218 70v116l-90 52-90-52V70l90-52Z" stroke="url(#m)" stroke-width="4"/>
+  <path d="M128 18v40M218 70l-35 20M218 186l-35-20M128 238v-40M38 186l35-20M38 70l35 20" stroke="url(#m)" stroke-opacity=".34" stroke-width="2"/>
+  <path d="M64 88 128 51l64 37-33 19-31-18-31 18-33-19Z" fill="#09131B" stroke="url(#m)" stroke-width="3"/>
+  <path d="M64 128 97 109l31 18 31-18 33 19-33 19-31-18-31 18-33-19Z" fill="#071019" stroke="url(#c)" stroke-width="3"/>
+  <path d="M64 168 97 149l31 18 31-18 33 19-64 37-64-37Z" fill="#09131B" stroke="url(#m)" stroke-width="3"/>
+  <path d="m97 109 31-18 31 18-31 18-31-18Zm31 20 31 18-31 18-31-18 31-18Z" fill="url(#c)" fill-opacity=".22"/>
+  <path d="M128 89v76" stroke="#C9F8FF" stroke-opacity=".32" stroke-width="2"/>
+  <circle cx="128" cy="128" r="8" fill="#BFF7FF"/><circle cx="128" cy="128" r="3" fill="#061019"/>
 </svg>
