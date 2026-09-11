@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#03070c">
-  <meta name="description" content="Synwyr by Kodaxa gives AI agents safe, structured control inside Blender, Unity, and professional 3D tools—with perception, verification, and rollback built in.">
-  <meta property="og:title" content="Synwyr — Give AI eyes and hands inside 3D tools">
-  <meta property="og:description" content="A local-first control layer for AI agents that can inspect, change, verify, and safely recover 3D scenes.">
+  <meta name="description" content="Synwyr is a local-first spatial control plane for AI agents: perceive live 3D worlds, author through native tools, verify against deterministic truth, and safely converge on finished work.">
+  <meta property="og:title" content="Synwyr — The control plane for AI-native 3D work">
+  <meta property="og:description" content="Give frontier models structured perception, native 3D authoring, deterministic verification, rollback, and reusable skill memory across Blender, Unity, and future hosts.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="/assets/synwyr-social.svg">
   <meta name="twitter:card" content="summary_large_image">
-  <title>Synwyr — AI control for 3D tools, with proof</title>
+  <title>Synwyr — Spatial intelligence for autonomous 3D work</title>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/styles.css">
   <script defer src="/app.js"></script>
@@ -27,55 +27,55 @@
     </a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span></span><span></span><span class="sr-only">Toggle navigation</span></button>
     <nav id="site-nav" class="site-nav" data-nav>
-      <a href="#how">How it works</a>
-      <a href="#why">Why Synwyr</a>
-      <a href="#status">Status</a>
-      <a class="nav-cta" href="https://github.com/Kodaxadev/RoboVision" target="_blank" rel="noreferrer">GitHub <span>↗</span></a>
+      <a href="#how">The loop</a>
+      <a href="#why">The system</a>
+      <a href="#vision">The vision</a>
+      <a class="nav-cta" href="https://github.com/Kodaxadev/RoboVision" target="_blank" rel="noreferrer">Engineering <span>↗</span></a>
     </nav>
   </header>
 
   <main id="top">
     <section class="hero shell" aria-labelledby="hero-title">
       <div class="hero-copy reveal">
-        <div class="eyebrow"><span class="eyebrow-dot"></span>KODAXA / SYNWYR MCP</div>
-        <h1 id="hero-title">AI that can inspect a 3D scene, change it, and prove the result.</h1>
-        <p class="hero-lede"><strong>Synwyr sits between an AI agent and Blender or Unity.</strong> It gives the model eyes on the scene, hands in the editor, and a closed loop that checks whether the change actually worked before the result is trusted.</p>
+        <div class="eyebrow"><span class="eyebrow-dot"></span>KODAXA / SYNWYR SPATIAL CONTROL PLANE</div>
+        <h1 id="hero-title">Give AI a real working loop inside 3D.</h1>
+        <p class="hero-lede"><strong>Synwyr is the reasoning and control layer between frontier models and professional 3D tools.</strong> It gives an agent structured perception, native authoring, deterministic truth, and reversible execution so it can create, inspect, correct, and deliver 3D work instead of firing one-shot scripts and hoping.</p>
         <div class="hero-actions">
-          <a class="button button-primary" href="#how"><span>See the control loop</span><i>↓</i></a>
-          <a class="button button-ghost" href="https://github.com/Kodaxadev/RoboVision" target="_blank" rel="noreferrer"><span>View engineering repo</span><i>↗</i></a>
+          <a class="button button-primary" href="#how"><span>See the agent loop</span><i>↓</i></a>
+          <a class="button button-ghost" href="https://github.com/Kodaxadev/RoboVision" target="_blank" rel="noreferrer"><span>Open engineering source</span><i>↗</i></a>
         </div>
         <div class="hero-strip" aria-label="Synwyr core properties">
-          <span><b>SEE</b> Scene state + evidence</span>
-          <span><b>ACT</b> Structured editor operations</span>
-          <span><b>VERIFY</b> Commit or rollback</span>
+          <span><b>PERCEIVE</b> Semantic + visual scene truth</span>
+          <span><b>AUTHOR</b> Typed native 3D operations</span>
+          <span><b>PROVE</b> Verify, commit, or recover</span>
         </div>
       </div>
 
-      <div class="hero-demo reveal" data-tilt-root aria-label="Synwyr scene editing demonstration">
+      <div class="hero-demo reveal" data-tilt-root aria-label="Synwyr closed-loop 3D agent demonstration">
         <div class="hero-demo-shell" data-tilt>
-          <div class="demo-topbar"><span></span><span></span><span></span><b>SYNWYR / LIVE SESSION</b></div>
+          <div class="demo-topbar"><span></span><span></span><span></span><b>SYNWYR / SPATIAL SESSION</b></div>
           <div class="demo-grid"></div>
 
           <div class="agent-panel">
-            <div class="panel-label">AGENT</div>
+            <div class="panel-label">REASONING CLIENT</div>
             <div class="agent-core">
               <img src="/assets/synwyr-mark.svg" alt="">
             </div>
-            <div class="agent-state">HOST: <strong>BLENDER</strong></div>
+            <div class="agent-state">HOST: <strong>3D EDITOR</strong></div>
           </div>
 
           <div class="pipeline" aria-hidden="true">
-            <div class="pipe-node active" data-pipe="0"><span>01</span><b>SEE</b></div>
+            <div class="pipe-node active" data-pipe="0"><span>01</span><b>PERCEIVE</b></div>
             <div class="pipe-line"></div>
-            <div class="pipe-node" data-pipe="1"><span>02</span><b>ACT</b></div>
+            <div class="pipe-node" data-pipe="1"><span>02</span><b>AUTHOR</b></div>
             <div class="pipe-line"></div>
-            <div class="pipe-node" data-pipe="2"><span>03</span><b>VERIFY</b></div>
+            <div class="pipe-node" data-pipe="2"><span>03</span><b>PROVE</b></div>
           </div>
 
           <div class="viewport-panel">
             <div class="viewport-head">
-              <span>SCENE VIEW</span>
-              <div class="viewport-pills"><i>rev <b data-revision>02417</b></i><i class="mode-pill">VERIFIED</i></div>
+              <span>WORLD STATE</span>
+              <div class="viewport-pills"><i>rev <b data-revision>02417</b></i><i class="mode-pill">AUTHORITATIVE</i></div>
             </div>
             <div class="viewport-stage">
               <div class="axis axis-x"></div>
@@ -99,24 +99,24 @@
               </div>
               <div class="scan-overlay"></div>
               <div class="vision-box"></div>
-              <div class="measure-tag tag-a">obj_142</div>
-              <div class="measure-tag tag-b">selected</div>
+              <div class="measure-tag tag-a">part_142</div>
+              <div class="measure-tag tag-b">tracked</div>
             </div>
           </div>
 
           <div class="ops-panel">
             <div class="panel-label">CURRENT STEP</div>
-            <div class="ops-stage" data-step-title>SEE THE SCENE</div>
-            <p class="ops-copy" data-step-copy>Read live scene state, persistent IDs, and visual evidence before changing anything.</p>
+            <div class="ops-stage" data-step-title>BUILD THE SCENE MODEL</div>
+            <p class="ops-copy" data-step-copy>Read authoritative scene state, geometry, identities, reference evidence, and known limits before planning a change.</p>
             <div class="ops-log" data-step-log>
               <code>scene.snapshot()</code>
-              <code>viewport.capture()</code>
-              <code>object.id = obj_142</code>
+              <code>perception.capture_bundle()</code>
+              <code>truth.measure()</code>
             </div>
           </div>
 
           <div class="compare-panel">
-            <div class="panel-label">RESULT CHECK</div>
+            <div class="panel-label">TRUTH CHECK</div>
             <div class="compare-grid">
               <div>
                 <span>BEFORE</span>
@@ -127,7 +127,7 @@
                 <div class="mini-scene after"><i></i></div>
               </div>
             </div>
-            <div class="verify-pill" data-verify-pill>✓ MATCHES EXPECTATION</div>
+            <div class="verify-pill" data-verify-pill>✓ VERIFIED STATE</div>
           </div>
         </div>
       </div>
@@ -136,34 +136,34 @@
     <section class="how-section border-top" id="how">
       <div class="shell">
         <div class="section-head reveal">
-          <div><div class="section-kicker">HOW IT WORKS</div><h2>A closed loop, not a blind command.</h2></div>
-          <p>Synwyr makes the agent re-check the world after every meaningful action. That is the difference between “the API returned success” and “the result is actually right.”</p>
+          <div><div class="section-kicker">THE AGENT LOOP</div><h2>From intent to verified 3D work.</h2></div>
+          <p>Synwyr turns 3D creation into an evidence-driven loop. The model can inspect what exists, form a spatial hypothesis, author a bounded change, measure what actually happened, and keep correcting until the result is good enough to ship.</p>
         </div>
 
         <div class="three-step reveal">
           <article class="step-card active" data-step-card="0">
             <div class="step-top"><span>01</span><i>PERCEPTION</i></div>
-            <h3>See the scene.</h3>
-            <p>Capture scene state, IDs, revisions, and visual evidence from the connected 3D editor.</p>
-            <div class="step-code"><code>scene.snapshot</code><code>viewport.capture</code></div>
+            <h3>Build a machine-readable world model.</h3>
+            <p>Combine authoritative scene state with geometry, topology, bounds, object identity, canonical views, depth, normals, IDs, references, and declared uncertainty.</p>
+            <div class="step-code"><code>scene + geometry</code><code>visual evidence</code></div>
           </article>
           <article class="step-card" data-step-card="1">
-            <div class="step-top"><span>02</span><i>ACTION</i></div>
-            <h3>Make the change.</h3>
-            <p>Run a bounded, editor-native operation against the same scene revision the agent inspected.</p>
-            <div class="step-code"><code>transaction.begin</code><code>mesh.modify</code></div>
+            <div class="step-top"><span>02</span><i>AUTHORING</i></div>
+            <h3>Work through native 3D operations.</h3>
+            <p>Create and modify objects, meshes, materials, scenes, assets, and editor state through typed host capabilities inside revision-pinned transactions—not giant generated scripts.</p>
+            <div class="step-code"><code>typed operations</code><code>bounded locality</code></div>
           </article>
           <article class="step-card" data-step-card="2">
             <div class="step-top"><span>03</span><i>VERIFICATION</i></div>
-            <h3>Prove the result.</h3>
-            <p>Inspect again, compare before/after state, and either commit the result or roll it back safely.</p>
-            <div class="step-code"><code>mesh.validate</code><code>commit / rollback</code></div>
+            <h3>Prove the result before it survives.</h3>
+            <p>Check hard geometry invariants, spatial relationships, reference agreement, repeated patterns, coverage, and edit blast radius. Commit what passed. Roll back what did not.</p>
+            <div class="step-code"><code>deterministic truth</code><code>commit / rollback</code></div>
           </article>
         </div>
 
         <div class="loop-summary reveal">
           <div class="loop-line" aria-hidden="true"><span></span></div>
-          <span>AI AGENT</span><b>→</b><span>SYNWYR</span><b>→</b><span>BLENDER / UNITY</span><b>→</b><span>NEW EVIDENCE</span><b>→</b><span>DECISION</span>
+          <span>MODEL</span><b>→</b><span>SYNWYR</span><b>→</b><span>3D HOST</span><b>→</b><span>TRUTH</span><b>→</b><span>CORRECTION</span><b>→</b><span>VERIFIED RESULT</span>
         </div>
       </div>
     </section>
@@ -171,66 +171,66 @@
     <section class="why-section border-top" id="why">
       <div class="shell why-grid">
         <div class="why-copy reveal">
-          <div class="section-kicker">WHY SYNWYR</div>
-          <h2>What it claims is what it shows.</h2>
-          <p>Synwyr is not just trying to expose controls. It is trying to give an autonomous model enough spatial context and recovery guarantees to work responsibly inside a real 3D project.</p>
-          <a class="text-link" href="https://github.com/Kodaxadev/RoboVision/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noreferrer">Read the architecture <span>↗</span></a>
+          <div class="section-kicker">THE SYSTEM</div>
+          <h2>Not another Blender chatbot. A control plane for spatial agents.</h2>
+          <p>Synwyr is designed to become the layer that lets any sufficiently capable model operate inside a live 3D production environment with the context, precision, memory, and recovery discipline that one-shot generation lacks.</p>
+          <a class="text-link" href="https://github.com/Kodaxadev/RoboVision" target="_blank" rel="noreferrer">Explore the engineering source <span>↗</span></a>
         </div>
 
         <div class="trust-grid reveal">
           <article class="trust-card">
             <span class="trust-no">01</span><div class="trust-icon">◎</div>
-            <h3>Persistent identity</h3>
-            <p>The agent reasons about real objects and revisions, not fragile labels or whatever the model last guessed.</p>
+            <h3>Spatial perception</h3>
+            <p>Semantic scene graphs and visual evidence belong in the same reasoning loop: objects, parts, transforms, topology, depth, normals, silhouettes, references, and what remains unknown.</p>
           </article>
           <article class="trust-card">
             <span class="trust-no">02</span><div class="trust-icon">◫</div>
-            <h3>Structured editor actions</h3>
-            <p>Normal work happens through typed host operations instead of treating Python or C# as the default control plane.</p>
+            <h3>Native authoring</h3>
+            <p>The model works through composable editor-native capabilities with stable identities and explicit coordinate contracts, while raw code remains an escape hatch rather than the product surface.</p>
           </article>
           <article class="trust-card">
             <span class="trust-no">03</span><div class="trust-icon">✓</div>
-            <h3>Evidence after action</h3>
-            <p>Synwyr can inspect the new result after the operation instead of pretending a green status means the outcome is correct.</p>
+            <h3>Deterministic 3D truth</h3>
+            <p>Geometry validity, dimensions, reference shape, pattern consistency, coverage, locality, and before/after evidence give the agent something stronger than confidence: measurable proof.</p>
           </article>
           <article class="trust-card">
             <span class="trust-no">04</span><div class="trust-icon">↶</div>
-            <h3>Rollback you can trust</h3>
-            <p>If the change is wrong, the system can restore prior state and verify that the restoration actually matches.</p>
+            <h3>Reversible autonomy</h3>
+            <p>Every meaningful edit can live inside a transaction. Failed hypotheses become useful trajectory data while the authored scene returns to the last verified state.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="status-section border-top" id="status">
+    <section class="status-section border-top" id="vision">
       <div class="shell status-layout">
         <div class="status-copy reveal">
-          <div class="section-kicker">CURRENT STATE</div>
-          <h2>Foundation first. Then breadth.</h2>
-          <p>Synwyr is active engineering work, not vapor. Blender has the strongest closed-loop implementation today. Unity parity and broader production-scene coverage are still being pushed forward and verified.</p>
+          <div class="section-kicker">THE END STATE</div>
+          <h2>One spatial intelligence layer. Any capable model. Every serious 3D workflow.</h2>
+          <p>The destination is bigger than an MCP server for one editor. Synwyr is a local-first control plane where models, generators, DCCs, and game engines can share the same authoritative state, verification semantics, transaction history, and reusable skills.</p>
           <div class="status-actions">
-            <a class="button button-primary" href="https://github.com/Kodaxadev/RoboVision" target="_blank" rel="noreferrer"><span>Follow development</span><i>↗</i></a>
-            <a class="button button-ghost" href="https://github.com/Kodaxadev/RoboVision/blob/main/docs/GATES.md" target="_blank" rel="noreferrer"><span>View acceptance gates</span><i>↗</i></a>
+            <a class="button button-primary" href="https://github.com/Kodaxadev/RoboVision" target="_blank" rel="noreferrer"><span>Follow the engineering</span><i>↗</i></a>
+            <a class="button button-ghost" href="#top"><span>Back to the loop</span><i>↑</i></a>
           </div>
         </div>
 
         <div class="host-status-board reveal">
           <article class="host-row">
-            <div class="host-badge blender">B</div>
-            <div><span>BLENDER</span><strong>Closed-loop control + perception</strong><small>Persistent host · editor-thread safe · transaction verification</small></div>
-            <i class="state good">VALIDATED</i>
+            <div class="host-badge blender">AI</div>
+            <div><span>MODEL LAYER</span><strong>Bring the reasoning model that fits the job</strong><small>Frontier models · specialized agents · generated skills · successful and failed trajectory memory</small></div>
+            <i class="state good">AGNOSTIC</i>
           </article>
           <article class="host-row">
-            <div class="host-badge unity">U</div>
-            <div><span>UNITY</span><strong>Native editor host</strong><small>GlobalObjectId · SerializedObject · Undo / Prefab semantics</small></div>
-            <i class="state active">IN PROGRESS</i>
+            <div class="host-badge unity">3D</div>
+            <div><span>AUTHORING HOSTS</span><strong>Native control inside real production tools</strong><small>Blender · Unity · future DCC and engine hosts through one explicit host contract</small></div>
+            <i class="state active">LOCAL-FIRST</i>
           </article>
           <article class="host-row future-row">
-            <div class="host-badge future">+</div>
-            <div><span>ARCHITECTURE</span><strong>Editor-agnostic by design</strong><small>MCP is the adapter. The host protocol is the real control surface.</small></div>
+            <div class="host-badge future">∞</div>
+            <div><span>CREATION PIPELINE</span><strong>Generate, inspect, repair, refine, and deliver</strong><small>Candidate generators become inputs; Synwyr remains the execution, truth, provenance, and correction layer</small></div>
             <i class="state">EXTENSIBLE</i>
           </article>
-          <div class="status-principle"><span>EVIDENCE OVER CONFIDENCE</span><p>Tool count is not the milestone. End-to-end behavior is.</p></div>
+          <div class="status-principle"><span>EVIDENCE OVER CONFIDENCE</span><p>The goal is not more tool calls. It is autonomous 3D work that can explain what changed, prove why it survived, recover when it failed, and reuse what it learned.</p></div>
         </div>
       </div>
     </section>
@@ -239,8 +239,8 @@
   <footer class="site-footer border-top">
     <div class="shell footer-row">
       <a class="brand" href="#top"><img src="/assets/synwyr-mark.svg" width="38" height="38" alt=""><span class="brand-word">SYNWYR</span><span class="brand-mcp">MCP</span></a>
-      <p>Spatial agent infrastructure by <a href="https://kodaxa.dev" target="_blank" rel="noreferrer">Kodaxa ↗</a></p>
-      <div><a href="https://github.com/Kodaxadev/RoboVision" target="_blank" rel="noreferrer">GitHub ↗</a><span>© <span data-year></span> KODAXA</span></div>
+      <p>Spatial intelligence infrastructure by <a href="https://kodaxa.dev" target="_blank" rel="noreferrer">Kodaxa ↗</a></p>
+      <div><a href="https://github.com/Kodaxadev/RoboVision" target="_blank" rel="noreferrer">Engineering ↗</a><span>© <span data-year></span> KODAXA</span></div>
     </div>
   </footer>
 </body>
