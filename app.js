@@ -43,45 +43,109 @@
       const r = tiltRoot.getBoundingClientRect();
       const x = (e.clientX - r.left) / r.width - .5;
       const y = (e.clientY - r.top) / r.height - .5;
-      tilt.style.transform = `rotateY(${x * 8}deg) rotateX(${-y * 8}deg)`;
+      tilt.style.transform = `rotateY(${x * 6}deg) rotateX(${-y * 6}deg)`;
     });
     tiltRoot.addEventListener('pointerleave', () => tilt.style.transform = 'rotateY(0deg) rotateX(0deg)');
   }
 
-  const loopData = [
-    { title: 'Observe before touching anything.', copy: 'Synwyr begins with explicit editor state and perception evidence. The agent knows which host it is connected to, what that host can do, what revision it is reasoning about, and what the scene actually looks like.', code: 'scene.snapshot\nviewport.capture' },
-    { title: 'Plan against identity, not appearance.', copy: 'The model reasons against persistent object IDs, topology revisions, capability schemas, and explicit scene state. Names and transient indices are not trusted as identity.', code: 'system.hello\nscene.search\nif_revision: 2417' },
-    { title: 'Make the smallest deterministic change.', copy: 'Actions are structured editor operations executed on the host\'s native editor thread. Arbitrary Python or C# is not the default control surface.', code: 'transaction.begin\nmesh.extrude\nmodifier.apply' },
-    { title: 'Look again. Never assume.', copy: 'After acting, Synwyr re-inspects machine state and captures visual evidence from the same editor world. The agent gets a new revision and the context needed to compare before and after.', code: 'mesh.validate\nviewport.capture\nscene.diff' },
-    { title: 'Separate completion from quality.', copy: 'A successful API call only proves that the host operation completed. Validation and evidence determine whether the result is actually acceptable.', code: 'validate(state)\ncompare(evidence)\nquality != confidence' },
-    { title: 'Commit—or prove restoration.', copy: 'A good result is committed. A bad result is rolled back, and Synwyr recomputes the pre-transaction fingerprint. Restoration must match; otherwise rollback is reported incomplete.', code: 'transaction.commit\n// or\ntransaction.rollback → fingerprint' }
+  const loopStates = [
+    {
+      title: 'SEE THE SCENE',
+      copy: 'Read live scene state, persistent IDs, and visual evidence before changing anything.',
+      log: ['scene.snapshot()', 'viewport.capture()', 'object.id = obj_142'],
+      verify: 'EVIDENCE CAPTURED',
+      verifyWarn: true,
+      activeNode: 0,
+      scene: scene => {
+        scene.focus.classList.remove('is-modified');
+        scene.focus.classList.add('is-focused');
+        scene.box.style.left = '29%';
+        scene.box.style.top = '25%';
+      }
+    },
+    {
+      title: 'APPLY THE CHANGE',
+      copy: 'Run a structured operation against the exact scene revision the agent already inspected.',
+      log: ['transaction.begin()', 'mesh.extrude(face_08)', 'if_revision = 2417'],
+      verify: 'CHANGE IN PROGRESS',
+      verifyWarn: true,
+      activeNode: 1,
+      scene: scene => {
+        scene.focus.classList.add('is-focused');
+        scene.focus.classList.add('is-modified');
+        scene.box.style.left = '31%';
+        scene.box.style.top = '22%';
+      }
+    },
+    {
+      title: 'VERIFY THE RESULT',
+      copy: 'Inspect again, compare before and after state, and only then trust or commit the result.',
+      log: ['mesh.validate()', 'scene.diff()', 'transaction.commit()'],
+      verify: '✓ MATCHES EXPECTATION',
+      verifyWarn: false,
+      activeNode: 2,
+      scene: scene => {
+        scene.focus.classList.add('is-focused');
+        scene.focus.classList.add('is-modified');
+        scene.box.style.left = '31%';
+        scene.box.style.top = '22%';
+      }
+    }
   ];
-  const loopNodes = $$('[data-loop-node]');
-  const loopTitle = $('[data-loop-title]');
-  const loopCopy = $('[data-loop-copy]');
-  const loopCode = $('[data-loop-code]');
-  const loopNumber = $('[data-loop-number]');
-  const loopProgress = $('[data-loop-progress]');
-  let loopIndex = 0;
-  let loopTimer;
 
-  const setLoop = (index, manual = false) => {
-    loopIndex = index;
-    loopNodes.forEach((n, i) => n.classList.toggle('active', i === index));
-    const d = loopData[index];
-    if (loopTitle) loopTitle.textContent = d.title;
-    if (loopCopy) loopCopy.textContent = d.copy;
-    if (loopCode) loopCode.textContent = d.code;
-    if (loopNumber) loopNumber.textContent = `${String(index + 1).padStart(2,'0')} / 06`;
-    if (loopProgress) loopProgress.style.width = `${(index / 5) * 100}%`;
-    if (manual) restartLoop();
+  const heroStepTitle = $('[data-step-title]');
+  const heroStepCopy = $('[data-step-copy]');
+  const heroStepLog = $('[data-step-log]');
+  const verifyPill = $('[data-verify-pill]');
+  const pipeNodes = $$('[data-pipe]');
+  const stepCards = $$('[data-step-card]');
+  const scene = {
+    focus: $('[data-scene-object="a"]'),
+    box: $('.vision-box')
   };
-  const restartLoop = () => {
-    clearInterval(loopTimer);
-    loopTimer = setInterval(() => setLoop((loopIndex + 1) % loopData.length), 5200);
+  let stateIndex = 0;
+  let stateTimer;
+
+  const renderState = index => {
+    stateIndex = index;
+    const state = loopStates[index];
+
+    if (heroStepTitle) heroStepTitle.textContent = state.title;
+    if (heroStepCopy) heroStepCopy.textContent = state.copy;
+    if (heroStepLog) {
+      heroStepLog.innerHTML = '';
+      state.log.forEach(line => {
+        const el = document.createElement('code');
+        el.textContent = line;
+        heroStepLog.appendChild(el);
+      });
+    }
+    if (verifyPill) {
+      verifyPill.textContent = state.verify;
+      verifyPill.classList.toggle('warn', !!state.verifyWarn);
+    }
+
+    pipeNodes.forEach((n, i) => n.classList.toggle('active', i === state.activeNode));
+    stepCards.forEach((n, i) => n.classList.toggle('active', i === state.activeNode));
+
+    if (scene.focus && scene.box) {
+      scene.focus.classList.remove('is-focused', 'is-modified');
+      state.scene(scene);
+    }
   };
-  loopNodes.forEach((node, i) => node.addEventListener('click', () => setLoop(i, true)));
-  restartLoop();
+
+  const restartStates = () => {
+    clearInterval(stateTimer);
+    stateTimer = setInterval(() => renderState((stateIndex + 1) % loopStates.length), 2600);
+  };
+
+  stepCards.forEach((card, index) => card.addEventListener('mouseenter', () => {
+    renderState(index);
+    restartStates();
+  }));
+
+  renderState(0);
+  restartStates();
 
   const revision = $('[data-revision]');
   let rev = 2417;
@@ -89,9 +153,10 @@
     if (!revision || document.hidden) return;
     rev += Math.random() > .55 ? 1 : 0;
     revision.textContent = String(rev).padStart(5, '0');
-  }, 3100);
+  }, 3000);
 
-  $('[data-year]').textContent = new Date().getFullYear();
+  const year = $('[data-year]');
+  if (year) year.textContent = new Date().getFullYear();
 
   const canvas = $('#field');
   const ctx = canvas?.getContext('2d');
@@ -107,13 +172,13 @@
     canvas.width = Math.floor(w * dpr); canvas.height = Math.floor(h * dpr);
     canvas.style.width = `${w}px`; canvas.style.height = `${h}px`;
     ctx.setTransform(dpr,0,0,dpr,0,0);
-    const count = Math.max(34, Math.min(86, Math.floor((w * h) / 25000)));
+    const count = Math.max(26, Math.min(72, Math.floor((w * h) / 30000)));
     nodes = Array.from({ length: count }, () => ({
       x: Math.random() * w,
       y: Math.random() * h,
       z: .25 + Math.random() * .75,
-      vx: (Math.random() - .5) * .07,
-      vy: (Math.random() - .5) * .07,
+      vx: (Math.random() - .5) * .06,
+      vy: (Math.random() - .5) * .06,
       r: .45 + Math.random() * 1.05,
       pulse: Math.random() * Math.PI * 2
     }));
@@ -141,14 +206,14 @@
         const bx = b.x + driftX * b.z, by = b.y + driftY * b.z;
         const dx = ax - bx, dy = ay - by;
         const dist = Math.sqrt(dx*dx + dy*dy);
-        if (dist < 125) {
-          const alpha = (1 - dist / 125) * .055 * Math.min(a.z,b.z);
+        if (dist < 115) {
+          const alpha = (1 - dist / 115) * .05 * Math.min(a.z,b.z);
           ctx.strokeStyle = `rgba(92,220,255,${alpha})`;
           ctx.lineWidth = .6;
           ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by); ctx.stroke();
         }
       }
-      const alpha = .09 + (Math.sin(a.pulse)+1) * .025;
+      const alpha = .08 + (Math.sin(a.pulse)+1) * .025;
       ctx.fillStyle = `rgba(106,226,255,${alpha * a.z})`;
       ctx.beginPath(); ctx.arc(ax,ay,a.r * a.z,0,Math.PI*2); ctx.fill();
     }
