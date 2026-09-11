@@ -3,13 +3,11 @@
   const $$ = (s, root = document) => [...root.querySelectorAll(s)];
 
   const header = $('[data-header]');
-  const menuToggle = $('[data-menu-toggle]');
   const nav = $('[data-nav]');
-
-  const syncHeader = () => header?.classList.toggle('scrolled', window.scrollY > 28);
+  const menuToggle = $('[data-menu-toggle]');
+  const syncHeader = () => header?.classList.toggle('scrolled', scrollY > 24);
   syncHeader();
   addEventListener('scroll', syncHeader, { passive: true });
-
   menuToggle?.addEventListener('click', () => {
     const open = nav.classList.toggle('open');
     menuToggle.setAttribute('aria-expanded', String(open));
@@ -19,15 +17,15 @@
     menuToggle?.setAttribute('aria-expanded', 'false');
   }));
 
-  const observer = new IntersectionObserver(entries => {
+  const revealObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
+        revealObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -35px' });
-  $$('.reveal').forEach(el => observer.observe(el));
+  }, { threshold: .12, rootMargin: '0px 0px -40px' });
+  $$('.reveal').forEach(el => revealObserver.observe(el));
 
   const cursor = $('.cursor-light');
   addEventListener('pointermove', e => {
@@ -43,144 +41,114 @@
       const r = tiltRoot.getBoundingClientRect();
       const x = (e.clientX - r.left) / r.width - .5;
       const y = (e.clientY - r.top) / r.height - .5;
-      tilt.style.transform = `rotateY(${x * 6}deg) rotateX(${-y * 6}deg)`;
+      tilt.style.transform = `rotateY(${x * 4.2}deg) rotateX(${-y * 4.2}deg)`;
     });
     tiltRoot.addEventListener('pointerleave', () => tilt.style.transform = 'rotateY(0deg) rotateX(0deg)');
   }
 
-  const loopStates = [
+  const phases = [
     {
-      title: 'SEE THE SCENE',
-      copy: 'Read live scene state, persistent IDs, and visual evidence before changing anything.',
-      log: ['scene.snapshot()', 'viewport.capture()', 'object.id = obj_142'],
-      verify: 'EVIDENCE CAPTURED',
-      verifyWarn: true,
-      activeNode: 0,
-      scene: scene => {
-        scene.focus.classList.remove('is-modified');
-        scene.focus.classList.add('is-focused');
-        scene.box.style.left = '29%';
-        scene.box.style.top = '25%';
-      }
+      title: 'PERCEIVE', copy: 'Capture the world before changing it.', state: 'CANDIDATE', stateClass: '', score: '0.62', truth: 'AWAITING EVIDENCE', truthClass: '', track: '24%', op1: 'scene.snapshot()', op2: 'viewport.capture()', rev: '2417', mesh: '', frame: '', txn: 0, bars: 1, commit: 'pending'
     },
     {
-      title: 'APPLY THE CHANGE',
-      copy: 'Run a structured operation against the exact scene revision the agent already inspected.',
-      log: ['transaction.begin()', 'mesh.extrude(face_08)', 'if_revision = 2417'],
-      verify: 'CHANGE IN PROGRESS',
-      verifyWarn: true,
-      activeNode: 1,
-      scene: scene => {
-        scene.focus.classList.add('is-focused');
-        scene.focus.classList.add('is-modified');
-        scene.box.style.left = '31%';
-        scene.box.style.top = '22%';
-      }
+      title: 'AUTHOR', copy: 'Apply one bounded host-native mutation.', state: 'CANDIDATE', stateClass: '', score: '0.71', truth: 'MUTATION OBSERVED', truthClass: '', track: '53%', op1: 'transaction.begin()', op2: 'mesh.extrude(face_08)', rev: '2417', mesh: 'authoring', frame: 'authoring', txn: 1, bars: 2, commit: 'pending'
     },
     {
-      title: 'VERIFY THE RESULT',
-      copy: 'Inspect again, compare before and after state, and only then trust or commit the result.',
-      log: ['mesh.validate()', 'scene.diff()', 'transaction.commit()'],
-      verify: '✓ MATCHES EXPECTATION',
-      verifyWarn: false,
-      activeNode: 2,
-      scene: scene => {
-        scene.focus.classList.add('is-focused');
-        scene.focus.classList.add('is-modified');
-        scene.box.style.left = '31%';
-        scene.box.style.top = '22%';
-      }
+      title: 'PROVE', copy: 'Re-observe state and pixels before acceptance.', state: 'VERIFYING', stateClass: '', score: '0.89', truth: 'COMPARING EVIDENCE', truthClass: '', track: '78%', op1: 'scene.diff()', op2: 'mesh.validate()', rev: '2418', mesh: 'authoring', frame: 'proven', txn: 3, bars: 3, commit: 'pending'
+    },
+    {
+      title: 'ACCEPT', copy: 'Bind proof to the transaction and commit.', state: 'ACCEPTED', stateClass: 'accepted', score: '0.98', truth: 'PROOF BOUND', truthClass: 'accepted', track: '100%', op1: 'transaction.commit()', op2: 'certificate.bind(A7F4)', rev: '2418', mesh: 'proven', frame: 'proven', txn: 4, bars: 4, commit: 'accepted'
     }
   ];
 
-  const heroStepTitle = $('[data-step-title]');
-  const heroStepCopy = $('[data-step-copy]');
-  const heroStepLog = $('[data-step-log]');
-  const verifyPill = $('[data-verify-pill]');
-  const pipeNodes = $$('[data-pipe]');
-  const stepCards = $$('[data-step-card]');
-  const scene = {
-    focus: $('[data-scene-object="a"]'),
-    box: $('.vision-box')
-  };
-  let stateIndex = 0;
-  let stateTimer;
+  const phaseIndex = $('[data-phase-index]');
+  const phaseTitle = $('[data-phase-title]');
+  const phaseCopy = $('[data-phase-copy]');
+  const phaseTrack = $('[data-phase-track]');
+  const stateEl = $('[data-system-state]');
+  const opPrimary = $('[data-op-primary]');
+  const opSecondary = $('[data-op-secondary]');
+  const opRevision = $('[data-op-revision]');
+  const truthScore = $('[data-truth-score]');
+  const truthState = $('[data-truth-state]');
+  const truthBars = $$('.truth-bars i');
+  const mesh = $('[data-primary-mesh]');
+  const perceptionFrame = $('[data-perception-frame]');
+  const txnSteps = $$('[data-txn]');
+  const txnStrip = $('.transaction-strip');
+  const commitLabel = $('[data-commit-label]');
+  const proofBeam = $('[data-proof-beam]');
+  let phase = 0;
 
-  const renderState = index => {
-    stateIndex = index;
-    const state = loopStates[index];
-
-    if (heroStepTitle) heroStepTitle.textContent = state.title;
-    if (heroStepCopy) heroStepCopy.textContent = state.copy;
-    if (heroStepLog) {
-      heroStepLog.innerHTML = '';
-      state.log.forEach(line => {
-        const el = document.createElement('code');
-        el.textContent = line;
-        heroStepLog.appendChild(el);
-      });
+  const renderPhase = i => {
+    phase = i;
+    const p = phases[i];
+    if (phaseIndex) phaseIndex.textContent = String(i + 1).padStart(2,'0');
+    if (phaseTitle) phaseTitle.textContent = p.title;
+    if (phaseCopy) phaseCopy.textContent = p.copy;
+    if (phaseTrack) phaseTrack.style.width = p.track;
+    if (stateEl) { stateEl.textContent = p.state; stateEl.className = `chrome-state ${p.stateClass}`.trim(); }
+    if (opPrimary) opPrimary.textContent = p.op1;
+    if (opSecondary) opSecondary.textContent = p.op2;
+    if (opRevision) opRevision.textContent = p.rev;
+    if (truthScore) { truthScore.textContent = p.score; truthScore.style.color = p.truthClass ? 'var(--green)' : 'var(--text)'; }
+    if (truthState) { truthState.textContent = p.truth; truthState.className = `truth-state ${p.truthClass}`.trim(); }
+    truthBars.forEach((bar, idx) => bar.classList.toggle('on', idx < p.bars));
+    if (mesh) mesh.className = `mesh mesh-primary ${p.mesh}`.trim();
+    if (perceptionFrame) perceptionFrame.className = `perception-frame ${p.frame}`.trim();
+    txnSteps.forEach((step, idx) => step.classList.toggle('active', idx <= p.txn));
+    if (commitLabel) commitLabel.textContent = p.commit;
+    if (proofBeam) proofBeam.classList.toggle('on', i >= 2);
+    if (txnStrip) {
+      txnStrip.classList.remove('flow');
+      void txnStrip.offsetWidth;
+      if (i > 0) txnStrip.classList.add('flow');
     }
-    if (verifyPill) {
-      verifyPill.textContent = state.verify;
-      verifyPill.classList.toggle('warn', !!state.verifyWarn);
-    }
-
-    pipeNodes.forEach((n, i) => n.classList.toggle('active', i === state.activeNode));
-    stepCards.forEach((n, i) => n.classList.toggle('active', i === state.activeNode));
-
-    if (scene.focus && scene.box) {
-      scene.focus.classList.remove('is-focused', 'is-modified');
-      state.scene(scene);
-    }
   };
+  renderPhase(0);
+  setInterval(() => renderPhase((phase + 1) % phases.length), 2850);
 
-  const restartStates = () => {
-    clearInterval(stateTimer);
-    stateTimer = setInterval(() => renderState((stateIndex + 1) % loopStates.length), 2600);
+  const loopModules = $$('[data-loop-module]');
+  const loopEnergy = $('[data-loop-energy]');
+  let loopIndex = 0;
+  const renderLoop = i => {
+    loopIndex = i;
+    loopModules.forEach((m, idx) => m.classList.toggle('active', idx === i));
+    if (loopEnergy) loopEnergy.style.transform = `translateY(${i * 100}%)`;
   };
-
-  stepCards.forEach((card, index) => card.addEventListener('mouseenter', () => {
-    renderState(index);
-    restartStates();
-  }));
-
-  renderState(0);
-  restartStates();
+  loopModules.forEach((m, i) => m.addEventListener('mouseenter', () => renderLoop(i)));
+  setInterval(() => renderLoop((loopIndex + 1) % loopModules.length), 4200);
 
   const revision = $('[data-revision]');
   let rev = 2417;
   setInterval(() => {
     if (!revision || document.hidden) return;
-    rev += Math.random() > .55 ? 1 : 0;
-    revision.textContent = String(rev).padStart(5, '0');
-  }, 3000);
+    if (phase >= 2) rev = 2418;
+    else rev = 2417;
+    revision.textContent = String(rev).padStart(5,'0');
+  }, 700);
 
   const year = $('[data-year]');
   if (year) year.textContent = new Date().getFullYear();
 
   const canvas = $('#field');
   const ctx = canvas?.getContext('2d');
-  const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!canvas || !ctx || prefersReducedMotion) return;
+  if (!canvas || !ctx || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  let w = 0, h = 0, dpr = 1, nodes = [];
+  let w = 0, h = 0, dpr = 1, nodes = [], t = 0;
   const pointer = { x: .5, y: .5 };
-
   const resize = () => {
-    dpr = Math.min(devicePixelRatio || 1, 1.6);
+    dpr = Math.min(devicePixelRatio || 1, 1.5);
     w = innerWidth; h = innerHeight;
     canvas.width = Math.floor(w * dpr); canvas.height = Math.floor(h * dpr);
     canvas.style.width = `${w}px`; canvas.style.height = `${h}px`;
     ctx.setTransform(dpr,0,0,dpr,0,0);
-    const count = Math.max(26, Math.min(72, Math.floor((w * h) / 30000)));
-    nodes = Array.from({ length: count }, () => ({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      z: .25 + Math.random() * .75,
-      vx: (Math.random() - .5) * .06,
-      vy: (Math.random() - .5) * .06,
-      r: .45 + Math.random() * 1.05,
-      pulse: Math.random() * Math.PI * 2
+    nodes = Array.from({ length: Math.max(18, Math.min(42, Math.floor(w / 34))) }, (_, i) => ({
+      a: (Math.PI * 2 * i) / Math.max(18, Math.min(42, Math.floor(w / 34))),
+      r: 150 + Math.random() * Math.max(180, w * .28),
+      s: .0007 + Math.random() * .0008,
+      z: .35 + Math.random() * .65,
+      p: Math.random() * Math.PI * 2
     }));
   };
   resize();
@@ -188,35 +156,23 @@
   addEventListener('pointermove', e => { pointer.x = e.clientX / w; pointer.y = e.clientY / h; }, { passive: true });
 
   const draw = () => {
+    t += 1;
     ctx.clearRect(0,0,w,h);
-    const driftX = (pointer.x - .5) * 10;
-    const driftY = (pointer.y - .5) * 8;
-
-    for (const n of nodes) {
-      n.x += n.vx; n.y += n.vy; n.pulse += .008;
-      if (n.x < -30) n.x = w + 30; else if (n.x > w + 30) n.x = -30;
-      if (n.y < -30) n.y = h + 30; else if (n.y > h + 30) n.y = -30;
-    }
-
-    for (let i = 0; i < nodes.length; i++) {
-      const a = nodes[i];
-      const ax = a.x + driftX * a.z, ay = a.y + driftY * a.z;
-      for (let j = i + 1; j < nodes.length; j++) {
-        const b = nodes[j];
-        const bx = b.x + driftX * b.z, by = b.y + driftY * b.z;
-        const dx = ax - bx, dy = ay - by;
-        const dist = Math.sqrt(dx*dx + dy*dy);
-        if (dist < 115) {
-          const alpha = (1 - dist / 115) * .05 * Math.min(a.z,b.z);
-          ctx.strokeStyle = `rgba(92,220,255,${alpha})`;
-          ctx.lineWidth = .6;
-          ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by); ctx.stroke();
-        }
+    const cx = w * (.68 + (pointer.x - .5) * .015);
+    const cy = h * (.26 + (pointer.y - .5) * .015);
+    ctx.lineWidth = .5;
+    nodes.forEach((n, i) => {
+      const a = n.a + t * n.s;
+      const x = cx + Math.cos(a) * n.r;
+      const y = cy + Math.sin(a) * n.r * .36;
+      const pulse = .045 + (Math.sin(t * .01 + n.p) + 1) * .018;
+      ctx.fillStyle = `rgba(115,218,240,${pulse * n.z})`;
+      ctx.beginPath(); ctx.arc(x,y,1.1*n.z,0,Math.PI*2); ctx.fill();
+      if (i % 3 === 0) {
+        ctx.strokeStyle = `rgba(93,190,216,${.025*n.z})`;
+        ctx.beginPath(); ctx.ellipse(cx,cy,n.r,n.r*.36,0,0,Math.PI*2); ctx.stroke();
       }
-      const alpha = .08 + (Math.sin(a.pulse)+1) * .025;
-      ctx.fillStyle = `rgba(106,226,255,${alpha * a.z})`;
-      ctx.beginPath(); ctx.arc(ax,ay,a.r * a.z,0,Math.PI*2); ctx.fill();
-    }
+    });
     requestAnimationFrame(draw);
   };
   draw();
